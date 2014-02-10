@@ -23,7 +23,7 @@
     var distanceCount;
 
     var actor;
-    var actor2;
+    var girlActor;
     var censoredActor;
 
     var startTime;
@@ -81,6 +81,11 @@
                 .setBounds(0, 0, this.width, this.height-controlpanelHeight)
             	.enableEvents(false);
             game.addChild(staticBg);
+            
+            girlActor = new CAAT.GirlActor()
+                .create(director);
+            
+            staticBg.addChild(girlActor);
 
             var controlPanel = new CAAT.ActorContainer()
                 .setBounds(0, this.height-controlpanelHeight,this.width,this.height)
@@ -113,6 +118,8 @@
             }
             brickActors = [];
             distanceCount = bricksDistance;
+            
+            girlActor.start( 600, 175 );
         },
         
         updateRun: function() {
@@ -141,7 +148,8 @@
         },
         
         pause: function() {
-            game.cacheAsBitmap();
+            //game.cacheAsBitmap();
+            game.cacheAsBitmap(0, CAAT.Foundation.Actor.CACHE_DEEP);
             this.setZOrder(menuInGame, Number.MAX_VALUE);
         },
         

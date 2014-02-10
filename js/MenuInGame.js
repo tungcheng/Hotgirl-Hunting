@@ -40,6 +40,7 @@
                         case 2:
                             break;
                         case 3:
+                            GameControl.pauseUnpauseGame();
                             MainControl.runMenuScene();
                             break;
                         case 4:
