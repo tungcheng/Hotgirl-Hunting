@@ -11,6 +11,7 @@
     
     var curLine;
     var line0y, line1y;
+    var isDead;
 
     CAAT.PlayActor.prototype = {
         
@@ -47,18 +48,26 @@
             this.velocity = velo;
             this.setLocation(x, y);
             this.playAnimation("run");
+            isDead = false;
             return this;
         }, 
         
         changeLine : function() {
-            curLine = (curLine===0) ? 1 : 0;
-            var y = (curLine===0) ? (line0y-this.height) : (line1y-this.height);
-            this.setLocation(this.x, y);
+            if(!isDead) {
+                curLine = (curLine===0) ? 1 : 0;
+                var y = (curLine===0) ? (line0y-this.height) : (line1y-this.height);
+                this.setLocation(this.x, y);
+            }
         },
         
         dead : function() {
-            this.playAnimation("die");
+            this.playAnimation("sad");
+            isDead = true;
             return this;
+        },
+        
+        getCurLine : function() {
+            return curLine;
         }
     };
 

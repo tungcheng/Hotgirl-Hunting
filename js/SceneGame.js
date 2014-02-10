@@ -10,10 +10,13 @@
     
     var game;
     var menuInGame;
+    var girlText;
+    var girlScore;
     
     var staticBg;
     var runBg;
     var runBgVel;
+    var runBgStartVel;
 
     var brickActors;
     var brickSize;
@@ -100,6 +103,17 @@
             game.addChild(menuButton);
             this.addChild(game);
             
+            var font= "24px sans-serif";
+            girlScore = 0;
+            girlText = new CAAT.Foundation.UI.TextActor()
+                .setFont(font)
+                .setText("Bạn đã bắt được: " + girlScore + " hotgirl (y)")
+                .setAlign("left")
+                .setTextFillStyle('red')
+                .setOutline(true)
+                .setOutlineColor('black');
+            game.addChild(girlText.setLocation(0, 0));
+            
             menuInGame = new CAAT.MenuInGameCtn();
             menuInGame.init();
             this.addChild(menuInGame);
@@ -117,8 +131,10 @@
             };
         },
 
-        start: function () {
-            runBgVel = 4;
+        start: function (startVel) {
+            girlScore = 0;
+            runBgStartVel = startVel || 6;
+            runBgVel = runBgStartVel;
             runBg.setLocation(0, 0);
             this.setZOrder(menuInGame, 0);
             
@@ -148,6 +164,20 @@
                 }
             }
             
+            for(var i in brickActors) {
+                var brick = brickActors[i];
+                if((brick.lineOnPath === playActor.getCurLine()) &&
+                        checkActorCollision(playActor, brick)) {
+                    playActor.dead();
+                    GameControl.loseGame();
+                }
+            }
+            
+            if(checkActorCollision(playActor, girlActor)) {
+                addGirlScore();
+                newRound();
+            }
+            
             runBg.x -= runBgVel;
             if(runBg.x + self.width <= 0) {
                 runBg.x += self.width;
@@ -168,8 +198,34 @@
         unpause: function() {
             game.stopCacheAsBitmap();
             this.setZOrder(menuInGame, 0);
+        },
+        
+        lose : function() {
+            this.setZOrder(menuInGame, Number.MAX_VALUE);
+        }, 
+        
+        incBgSpeed : function(multi) {
+            runBgVel *= multi;
+            console.log(runBgVel);
         }
         
+    };
+    
+    var addGirlScore = function() {
+        girlScore++;
+        girlText.setText("Bạn đã bắt được: " + girlScore + " hotgirl (y)");
+    };
+    
+    var newRound = function() {
+        runBgVel = runBgStartVel;
+        for(var i in brickActors) {
+            var brick = brickActors[i];
+            runBg.removeChild(brick);
+        }
+        brickActors = [];
+        distanceCount = bricksDistance;
+        
+        playActor.start(0.3, 100, 0, line0y, line1y);
     };
     
     var addBrick = function() {
@@ -199,8 +255,8 @@
     var r1 = new CAAT.Rectangle();
     // e0, e1: CAAT.Actors
     var checkActorCollision = function (e0, e1) {
-        r0.setBounds( e0.AABB.x, e0.AABB.y, e0.AABB.width, e0.AABB.height );
-        r1.setBounds( e1.AABB.x, e1.AABB.y, e1.AABB.width, e1.AABB.height );
+        r0.setBounds( e0.AABB.x+20, e0.AABB.y, e0.AABB.width-20, e0.AABB.height );
+        r1.setBounds( e1.AABB.x+20, e1.AABB.y, e1.AABB.width-20, e1.AABB.height );
         return r0.intersects(r1);
     };
     

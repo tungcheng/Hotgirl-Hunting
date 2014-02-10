@@ -44,7 +44,9 @@
                             MainControl.runMenuScene();
                             break;
                         case 4:
-                            GameControl.pauseUnpauseGame();
+                            if(GameControl.isPlayable()) {
+                                GameControl.pauseUnpauseGame();
+                            }
                             break;
                     }
                 })
