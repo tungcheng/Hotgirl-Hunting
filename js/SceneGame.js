@@ -27,10 +27,7 @@
 
     var playActor;
     var girlActor;
-    var censoredActor;
     var line0y, line1y;
-
-    var startTime;
     
     var director;
     var CANVAS_WIDTH, CANVAS_HEIGHT;
@@ -146,7 +143,7 @@
             brickActors = [];
             distanceCount = bricksDistance;
             
-            girlActor.start(600, 175);
+            girlActor.start(450, 175);
             playActor.start(0.3, 100, 0, line0y, line1y);
         },
         
@@ -191,7 +188,6 @@
         },
         
         pause: function() {
-            //game.cacheAsBitmap();
             game.cacheAsBitmap(game.time, CAAT.Foundation.Actor.CACHE_DEEP);
             this.setZOrder(menuInGame, Number.MAX_VALUE);
         },
@@ -207,7 +203,6 @@
         
         incBgSpeed : function(multi) {
             runBgVel *= multi;
-            console.log(runBgVel);
         }
         
     };

@@ -47,6 +47,9 @@
                             if(GameControl.isPlayable()) {
                                 GameControl.pauseUnpauseGame();
                             }
+                            else {
+                                MainControl.newGame();
+                            }
                             break;
                     }
                 })

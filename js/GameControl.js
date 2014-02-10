@@ -20,7 +20,7 @@ var GameControl = (function () {
         init: function(gameCtn) {
             self = this;
             ups = 40;
-            incSpeedTime = 6000;
+            incSpeedTime = 2000;
             multiSpeed = 1.1;
             gameView = gameCtn;
             gameView.init();
