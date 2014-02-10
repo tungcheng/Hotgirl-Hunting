@@ -107,7 +107,7 @@
             girlScore = 0;
             girlText = new CAAT.Foundation.UI.TextActor()
                 .setFont(font)
-                .setText("Bạn đã bắt được: " + girlScore + " hotgirl (y)")
+                .setText("You hunted down: " + girlScore + " hotgirl (y)")
                 .setAlign("left")
                 .setTextFillStyle('red')
                 .setOutline(true)
@@ -133,7 +133,7 @@
 
         start: function (startVel) {
             girlScore = 0;
-            girlText.setText("Bạn đã bắt được: " + girlScore + " hotgirl (y)");
+            girlText.setText("You hunted down: " + girlScore + " hotgirl (y)");
             runBgStartVel = startVel || 6;
             runBgVel = runBgStartVel;
             runBg.setLocation(0, 0);
@@ -214,7 +214,7 @@
     
     var addGirlScore = function() {
         girlScore++;
-        girlText.setText("Bạn đã bắt được: " + girlScore + " hotgirl (y)");
+        girlText.setText("You hunted down: " + girlScore + " hotgirl (y)");
     };
     
     var newRound = function() {
