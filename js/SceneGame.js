@@ -133,6 +133,7 @@
 
         start: function (startVel) {
             girlScore = 0;
+            girlText.setText("Bạn đã bắt được: " + girlScore + " hotgirl (y)");
             runBgStartVel = startVel || 6;
             runBgVel = runBgStartVel;
             runBg.setLocation(0, 0);
