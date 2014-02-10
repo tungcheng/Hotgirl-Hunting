@@ -22,9 +22,10 @@
     var bricksDistance;
     var distanceCount;
 
-    var actor;
+    var playActor;
     var girlActor;
     var censoredActor;
+    var line0y, line1y;
 
     var startTime;
     
@@ -84,8 +85,11 @@
             
             girlActor = new CAAT.GirlActor()
                 .create(director);
+            playActor = new CAAT.PlayActor()
+                .create(director);
             
             staticBg.addChild(girlActor);
+            staticBg.addChild(playActor);
 
             var controlPanel = new CAAT.ActorContainer()
                 .setBounds(0, this.height-controlpanelHeight,this.width,this.height)
@@ -102,9 +106,15 @@
             
             brickSize = 50;
             brickImg = director.getImage('brick');
+            line0y = runBg.height - 1.5*brickSize + brickSize;
+            line1y = runBg.height - 2.8*brickSize + brickSize;
             
             numBricksPerSceneWidth = 3;
             bricksDistance = self.width/numBricksPerSceneWidth;
+            
+            game.mouseDown = function(e) {
+                playActor.changeLine();
+            };
         },
 
         start: function () {
@@ -119,7 +129,8 @@
             brickActors = [];
             distanceCount = bricksDistance;
             
-            girlActor.start( 600, 175 );
+            girlActor.start(600, 175);
+            playActor.start(0.3, 100, 0, line0y, line1y);
         },
         
         updateRun: function() {
@@ -145,11 +156,12 @@
                     brick.x -= self.width;
                 }
             }
+            playActor.x += playActor.velocity;
         },
         
         pause: function() {
             //game.cacheAsBitmap();
-            game.cacheAsBitmap(0, CAAT.Foundation.Actor.CACHE_DEEP);
+            game.cacheAsBitmap(game.time, CAAT.Foundation.Actor.CACHE_DEEP);
             this.setZOrder(menuInGame, Number.MAX_VALUE);
         },
         
@@ -168,10 +180,10 @@
             .setScaleAnchored(brickSize/brickImg.width, brickSize/brickImg.height, 0, 0)
             .enableEvents(false);
         if(ranNum === 1) {
-            brick.setLocation((-1)*runBg.x+self.width, runBg.height - 1.5*brickSize);
+            brick.setLocation((-1)*runBg.x+self.width, line1y - brickSize);
         }
         else {
-            brick.setLocation((-1)*runBg.x+self.width, runBg.height - 2.8*brickSize);
+            brick.setLocation((-1)*runBg.x+self.width, line0y - brickSize);
         }
         brick.lineOnPath = ranNum;
         brickActors.push(brick);

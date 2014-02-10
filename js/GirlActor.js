@@ -1,7 +1,8 @@
 (function() {
-
+    var self;
     CAAT.GirlActor = function() {
         CAAT.GirlActor.superclass.constructor.call(this);
+        self = this;
         return (this);
     };
 
