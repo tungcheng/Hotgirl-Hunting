@@ -79,7 +79,7 @@
         init: function () {
             var director = MainControl.getDirector();
             buttons = [];
-            this.setBackgroundImage(director.getImage("menu_bg2"));
+            this.setBackgroundImage(director.getImage("menu_bg"));
             var buttonImage = new CAAT.SpriteImage().initialize(director.getImage("menu_button"), 4, 2);
             var i = 0;
             for (i; i < 4; i++) {
